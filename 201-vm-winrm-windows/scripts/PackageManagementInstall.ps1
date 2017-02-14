@@ -7,7 +7,7 @@ Invoke-WebRequest https://download.microsoft.com/download/C/4/1/C41378D4-7F41-4B
 Start-Process "$tempDirectory\PackageManagement_x64.msi" -ArgumentList '/qn' -Wait
 Remove-Item "$tempDirectory" -recurse
 
-# Install NuGet (or as part of provisioning VM)
+# Install NuGet
 Write-Host "Installing 'NuGet' ..."
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 –Force –Verbose
 
