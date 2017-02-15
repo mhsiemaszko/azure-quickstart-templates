@@ -184,7 +184,7 @@
       "resources": [
         {
           "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(variables('vmName'),'/WinRMCustomScriptExtension')]",
+          "name": "[concat(variables('vmName'),'/VnWinPostDeploymentSetupCustomScriptExtension')]",
           "apiVersion": "[variables('apiVersion')]",
           "location": "[resourceGroup().location]",
           "dependsOn": [
@@ -196,71 +196,11 @@
             "typeHandlerVersion": "1.4",
             "settings": {
               "fileUris": [
-                "https://raw.githubusercontent.com/mhsiemaszko/azure-quickstart-templates/master/201-vm-winrm-windows/scripts/ConfigureWinRM.ps1",
+                "https://raw.githubusercontent.com/mhsiemaszko/azure-quickstart-templates/master/201-vm-winrm-windows/scripts/PostDeploymentSetup.ps1",
                 "https://raw.githubusercontent.com/mhsiemaszko/azure-quickstart-templates/master/201-vm-winrm-windows/makecert.exe",
                 "https://raw.githubusercontent.com/mhsiemaszko/azure-quickstart-templates/master/201-vm-winrm-windows/winrmconf.cmd"
               ],
-              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -file ConfigureWinRM.ps1 ',variables('hostDNSNameScriptArgument'))]"
-            }
-          }
-        }, 
-        {
-          "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(variables('vmName'),'/PackageManagementInstallCustomScriptExtension')]",
-          "apiVersion": "[variables('apiVersion')]",
-          "location": "[resourceGroup().location]",
-          "dependsOn": [
-            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-          ],
-          "properties": {
-            "publisher": "Microsoft.Compute",
-            "type": "CustomScriptExtension",
-            "typeHandlerVersion": "1.4",
-            "settings": {
-              "fileUris": [
-                "https://raw.githubusercontent.com/mhsiemaszko/azure-quickstart-templates/master/201-vm-winrm-windows/scripts/PackageManagementInstall.ps1"
-              ],
-              "commandToExecute": "powershell -ExecutionPolicy Unrestricted -file PackageManagementInstall.ps1"
-            }
-          }
-        }, 
-        {
-          "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(variables('vmName'),'/AzureInstallCustomScriptExtension')]",
-          "apiVersion": "[variables('apiVersion')]",
-          "location": "[resourceGroup().location]",
-          "dependsOn": [
-            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-          ],
-          "properties": {
-            "publisher": "Microsoft.Compute",
-            "type": "CustomScriptExtension",
-            "typeHandlerVersion": "1.4",
-            "settings": {
-              "fileUris": [
-                "https://raw.githubusercontent.com/mhsiemaszko/azure-quickstart-templates/master/201-vm-winrm-windows/scripts/AzureInstall.ps1"
-              ],
-              "commandToExecute": "powershell -ExecutionPolicy Unrestricted -file AzureInstall.ps1"
-            }
-          }
-        },
-        {
-          "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(variables('vmName'),'/ChocolateyInstallCustomScriptExtension')]",
-          "apiVersion": "[variables('apiVersion')]",
-          "location": "[resourceGroup().location]",
-          "dependsOn": [
-            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-          ],
-          "properties": {
-            "publisher": "Microsoft.Compute",
-            "type": "CustomScriptExtension",
-            "typeHandlerVersion": "1.4",
-            "settings": {
-              "fileUris": [
-                "https://raw.githubusercontent.com/mhsiemaszko/azure-quickstart-templates/master/201-vm-winrm-windows/scripts/ChocolateyInstall.ps1"
-              ],
-              "commandToExecute": "powershell -ExecutionPolicy Unrestricted -file ChocolateyInstall.ps1"
+              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -file PostDeploymentSetup.ps1 ',variables('hostDNSNameScriptArgument'))]"
             }
           }
         }
