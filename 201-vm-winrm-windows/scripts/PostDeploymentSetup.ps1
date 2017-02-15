@@ -91,7 +91,7 @@ Remove-Item "$tempDirectory" -recurse
 
 # Install NuGet
 Write-Host "Installing 'NuGet' ..."
-Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 –Force –Verbose
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Verbose
 
 # Modify installation policy for 'PowerShellGallery' repository
 Write-Host "Modifying installation policy for 'PowerShellGallery' repository ..."
