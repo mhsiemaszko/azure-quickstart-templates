@@ -2,7 +2,7 @@
 #  Name        : PostDeploymentSetup.ps1                                                                                       
 #                                                                                                                             
 #  Description : Installs 'PackageManagement PowerShell Modules', 'Azure Resource Manager Modules' and 'Chocolatey'; 
-#                configures WinRM service                                                                        
+#                configures WinRM service; installs and configures Active Directory integrated DNS service                                                                       
 #                                                                                                                              
 #  Arguments   : HostName, specifies the FQDN of machine or domain                                                           
 #################################################################################################################################
@@ -129,5 +129,17 @@ Configure-WinRMHttpsListener $HostName $port
 
 # Add firewall exception
 Add-FirewallException -port $winrmHttpsPort
+
+
+#################################################################################################################################
+#                               Install and configure Active Directory integrated DNS service                                   #
+#################################################################################################################################
+
+# Install necessary features & tools
+Install-WindowsFeature AD-Domain-Services, DNS, RSAT-ADDS -IncludeManagementTools -IncludeAllSubFeature
+
+# Configure domain 
+$safeModeAdminPassword = ConvertTo-SecureString '4dDn$Te$t' -AsPlainText -Force
+Install-ADDSForest -DomainName addns.vnomic.com -SafeModeAdministratorPassword $safeModeAdminPassword -Confirm:$false
 
 #################################################################################################################################
